@@ -7,13 +7,13 @@ function createToyCard(toy) {
   toyCard.innerHTML = `
   <h2>${toy.name}</h2>
   <img src = "${toy.image}" class = "toy-avatar">
-  <p><span>${toy.likes}</span> Like${toy.likes !== 1 ? "s" : ""}</p>
+  <p><span id = likes_${toy.id}>${toy.likes}</span> Like${toy.likes !== 1 ? "s" : ""}</p>
   <button class = "like-btn" id = "${toy.id}">Like &#9829</button>
   `;
   toysContainer.appendChild(toyCard);
 
   // Add Likes Button event listener
-  document.querySelector('.like-btn').addEventListener('click', e => increaseLikes(e.target.id))
+  toyCard.querySelector('.like-btn').addEventListener('click', e => increaseLikes(toy.id))
 }
 
 async function newLikes(toyid) {
@@ -37,7 +37,7 @@ async function increaseLikes(toyId){
   })
   .then(res => res.json())
   .then(data => {
-    document.querySelector('.card p span').textContent = data.likes
+    document.querySelector(`#likes_${toyId}`).textContent = data.likes
   })
 }
 
